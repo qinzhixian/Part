@@ -4,7 +4,7 @@ using System.Text;
 using System.Threading;
 using Ds = System.Diagnostics;
 
-namespace Util.Process
+namespace Util
 {
     /// <summary>
     /// Process处理类
@@ -17,14 +17,10 @@ namespace Util.Process
         /// <param name="filename">程序名</param>  
         /// <param name="arguments">输入参数</param>  
         /// <returns></returns>  
-        public static string StartExe(string filename, string arguments, bool recordLog)
+        public static string StartCmd(string filename, string arguments = "")
         {
             try
             {
-                if (recordLog)
-                {
-                    Trace.WriteLine(filename + " " + arguments);
-                }
                 Ds.Process proc = new Ds.Process();
                 proc.StartInfo.FileName = filename;
                 proc.StartInfo.CreateNoWindow = true;
@@ -35,27 +31,35 @@ namespace Util.Process
 
                 using (System.IO.StreamReader sr = new System.IO.StreamReader(proc.StandardOutput.BaseStream, Encoding.Default))
                 {
-                    //上面标记的是原文，下面是我自己调试错误后自行修改的  
-                    Thread.Sleep(100);           //貌似调用系统的nslookup还未返回数据或者数据未编码完成，程序就已经跳过直接执行  
-                                                 //txt = sr.ReadToEnd()了，导致返回的数据为空，故睡眠令硬件反应  
-                    if (!proc.HasExited)         //在无参数调用nslookup后，可以继续输入命令继续操作，如果进程未停止就直接执行  
-                    {                            //txt = sr.ReadToEnd()程序就在等待输入，而且又无法输入，直接掐住无法继续运行  
+                    Thread.Sleep(100);
+
+                    if (!proc.HasExited)
+                    {
                         proc.Kill();
                     }
                     string txt = sr.ReadToEnd();
                     sr.Close();
-                    if (recordLog)
-                        Trace.WriteLine(txt);
                     return txt;
                 }
             }
             catch (Exception ex)
             {
-                Trace.WriteLine(ex);
                 return ex.Message;
             }
 
         }
-        
+
+
+        /// <summary>
+        /// 打开一个程序
+        /// </summary>
+        /// <param name="fileName"></param>
+        /// <param name="arguments"></param>
+        public static void StartExe(string fileName, string arguments = "")
+        {
+            System.Diagnostics.Process.Start(fileName, arguments);
+        }
+
+
     }
 }

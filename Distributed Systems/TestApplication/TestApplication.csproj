@@ -54,9 +54,9 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\LogCenter-1.0\LogCenter-1.0.csproj">
-      <Project>{52ad292b-6d29-421d-855e-fdb809fc4fc8}</Project>
-      <Name>LogCenter-1.0</Name>
+    <ProjectReference Include="..\Util\Util.csproj">
+      <Project>{0bb84c06-5895-4e7e-b27b-cb0b725ed12c}</Project>
+      <Name>Util</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

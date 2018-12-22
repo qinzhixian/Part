@@ -19,18 +19,17 @@ namespace LogCenter
         internal static void Init()
         {
             LogList = new Queue<LogModel>();
-
-            try
+            ThreadPool.QueueUserWorkItem((s) =>
             {
-                ThreadPool.QueueUserWorkItem((s) =>
+                try
                 {
                     Work.Start();
-                });
-            }
-            catch (Exception ex)
-            {
-                Util.Log.WriteLog(ex.ToString(), Util.LogType.Error);
-            }
+                }
+                catch (Exception ex)
+                {
+                    Util.Log.WriteLog(ex.ToString(), Util.LogType.Error);
+                }
+            });
         }
 
         /// <summary>
@@ -39,8 +38,16 @@ namespace LogCenter
         /// <param name="log"></param>
         internal static void AddLog(LogModel log)
         {
-            LogList.Enqueue(log);
-            logAutoEvent.Set();
+            try
+            {
+                LogList.Enqueue(log);
+                logAutoEvent.Set();
+            }
+            catch (Exception ex)
+            {
+                AddLog(string.Format("添加日志是发生错误！错误原因：{0}", ex.Message), Util.LogType.Error);
+            }
+
         }
 
         /// <summary>
@@ -50,8 +57,7 @@ namespace LogCenter
         /// <param name="logType"></param>
         internal static void AddLog(string content, Util.LogType logType)
         {
-            LogList.Enqueue(new LogModel { AddTime = DateTime.Now, Content = content, LogType = logType });
-            logAutoEvent.Set();
+            AddLog(new LogModel { AddTime = DateTime.Now, Content = content, LogType = logType });
         }
 
         /// <summary>

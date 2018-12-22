@@ -14,12 +14,7 @@ namespace Util
     {
         #region 私有成员
 
-        private SmtpClient _Client = new SmtpClient();
-
-        private string useName = string.Empty;
-        private string password = string.Empty;
-        private string smtp = string.Empty;
-        private string sendForm = string.Empty;
+        private SmtpClient _Client;
 
         #endregion
 
@@ -32,13 +27,14 @@ namespace Util
         /// <param name="port">端口</param>
         public Email(string userName, string password, string smtp, int port)
         {
+            this._Client = new SmtpClient();
             this._Client.UseDefaultCredentials = true;
             this._Client.Credentials = new NetworkCredential(userName, password);
             this._Client.Port = port;
             this._Client.Host = smtp;
             this._Client.EnableSsl = true;
         }
-        
+
         /// <summary>
         /// 发送邮件
         /// </summary>
@@ -46,33 +42,33 @@ namespace Util
         /// <param name="title">邮件标题</param>
         /// <param name="content">邮件正文</param>
         /// <param name="sendTo">收件人</param>
-        public void Send(string sendForm, string title, string content, params string[] sendTo)
+        public string Send(string sendForm, string title, string content, params string[] sendTo)
         {
             using (MailMessage message = new MailMessage())
             {
-                foreach (string str in sendTo)
-                {
-                    message.To.Add(str);
-                }
-                message.From = new MailAddress(sendForm);
-                message.Subject = title;
-                message.SubjectEncoding = Encoding.UTF8;
-                message.Body = content;
-                message.BodyEncoding = Encoding.UTF8;
-                message.IsBodyHtml = true;
-                message.Priority = MailPriority.Normal
-;
                 try
                 {
+                    foreach (string str in sendTo)
+                    {
+                        message.To.Add(str);
+                    }
+                    message.From = new MailAddress(sendForm);
+                    message.Subject = title;
+                    message.SubjectEncoding = Encoding.UTF8;
+                    message.Body = content;
+                    message.BodyEncoding = Encoding.UTF8;
+                    message.IsBodyHtml = true;
+                    message.Priority = MailPriority.Normal;
+
                     this._Client.Send(message);
+                    return string.Empty;
                 }
                 catch (System.Exception ex)
                 {
-                    throw new Util.Exception("邮件发送失败！", ex);
+                    return string.Format("邮件发送失败，错误原因：{0}", ex.Message);
                 }
             }
         }
-        
 
         /// <summary>
         /// 释放资源

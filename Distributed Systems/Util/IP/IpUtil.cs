@@ -77,7 +77,7 @@ namespace Util.IP
         /// <returns></returns>
         public static string GetLocalIP()
         {
-            string result = Util.Process.Process.StartExe("route", "print", true);
+            string result = Util.Process.StartCmd("route", "print");
             Match m = Regex.Match(result, @"0.0.0.0\s+0.0.0.0\s+(\d+.\d+.\d+.\d+)\s+(\d+.\d+.\d+.\d+)");
             if (m.Success)
             {
@@ -107,7 +107,7 @@ namespace Util.IP
         /// <returns></returns>  
         public static string GetPrimaryDNS()
         {
-            string result = Util.Process.Process.StartExe("nslookup", "", true);
+            string result = Util.Process.StartCmd("nslookup", "");
             Match m = Regex.Match(result, @"\d+\.\d+\.\d+\.\d+");
             if (m.Success)
             {

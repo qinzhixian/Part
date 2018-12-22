@@ -18,12 +18,24 @@ namespace LogCenter
                 for (int i = 0; i < len; i++)
                 {
                     var log = logList.Dequeue();
-                    ThreadPool.QueueUserWorkItem((s) =>
+                    if (log == null)
+                        continue;
+
+                    try
                     {
-                        WriteLog(s as LogModel);
-                    }, log);
+                        WriteLog(log);
+                    }
+                    catch (System.Exception ex)
+                    {
+                        WriteLog(new LogModel
+                        {
+                            AddTime = System.DateTime.Now,
+                            Content = string.Format("记录日志时发生错误！错误原因：{0}", ex.Message),
+                            LogType = Util.LogType.Error
+                        });
+                    }
                 }
-                Static.logAutoEvent.WaitOne();
+                Static.logAutoEvent.WaitOne(1000 * 60 * 10);
             }
         }
 

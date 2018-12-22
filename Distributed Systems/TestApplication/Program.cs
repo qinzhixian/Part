@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Threading;
+using System.Linq;
 
 namespace TestApplication
 {
@@ -6,28 +8,49 @@ namespace TestApplication
     {
         static void Main(string[] args)
         {
-
             try
             {
+                #region DataCenter 1.0
 
-                //DataCenter.Global Service = new DataCenter.Global("Model",true);
+                //DataCenter.Global service = new DataCenter.Global("Model", true);
 
-                //Service.Add(new Model.UserInfo() { UserId = Guid.NewGuid().ToString(), UserName = "qzx", Age = 21 });
+                //for (int i = 0; i < 100; i++)
+                //{
+                //    service.Add(new Model.UserInfo { Age = i, UserId = Guid.NewGuid().ToString(), UserName = i.ToString() });
+                //}
 
-                //Service.Update(t => t.UserId == t.UserId, new Model.UserInfo { UserId = "123", Age = 111, UserName = "2222222" });
+                //var data = service.GetList<Model.UserInfo>().OrderBy(t => t.Age);
+                //foreach (var item in data)
+                //{
+                //    Console.WriteLine(item.UserName);
+                //}
 
-                //Service.Remove<Model.UserInfo>(t => t.UserName == "2222222");
+                #endregion
 
-                //var list = Service.GetList<Model.UserInfo>();
+                #region DataCenter 2.0
 
-                //Console.WriteLine(list.Count);
-                
-               
+                //DataCenter.Global.Start("Model");
+
+                //for (int i = 0; i < 100; i++)
+                //{
+                //    DataCenter.Global.Add(new Model.UserInfo { Age = i, UserId = Guid.NewGuid().ToString(), UserName = i.ToString() });
+                //}
+
+                //var data = DataCenter.Global.GetList<Model.UserInfo>().OrderBy(t => t.Age);
+
+                //foreach (var item in data)
+                //{
+                //    Console.WriteLine(item.UserName);
+                //}
+
+                #endregion
             }
             catch (Exception ex)
             {
                 Console.WriteLine(ex);
             }
+
+            Console.WriteLine("执行完毕");
             Console.ReadKey();
         }
     }

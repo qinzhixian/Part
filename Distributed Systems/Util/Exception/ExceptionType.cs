@@ -21,14 +21,27 @@ namespace Util
         /// <summary>
         /// 数据(传入数据)为NULL或者空
         /// </summary>
-        [Description("数据(传入数据)为NULL或者空")]
-        ContentIsNullOrEmpty,
+        [Description("输入数据为NULL或者空")]
+        InputDataIsNullOrEmpty,
 
         /// <summary>
         /// 数据(输出数据)为NULL或者空
         /// </summary>
-        [Description("数据(输出数据)为NULL或者空")]
-        DataIsNullOrEmpty,
+        [Description("数输出数据为NULL或者空")]
+        OutDataIsNullOrEmpty,
+
+        /// <summary>
+        /// 数据转换失败
+        /// </summary>
+        [Description("数据转换失败")]
+        ConvertError,
+
+        /// <summary>
+        /// 时间为NULL或者空
+        /// </summary>
+        [Description("时间为NULL或者空")]
+        DateTimeIsNullOrEmpty,
+
 
         /// <summary>
         /// 未知的
