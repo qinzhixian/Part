@@ -44,7 +44,9 @@ namespace TestApplication
                 //}
 
                 #endregion
-            }
+
+                var data = Guid.NewGuid().ToString();
+             }
             catch (Exception ex)
             {
                 Console.WriteLine(ex);

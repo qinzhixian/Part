@@ -48,8 +48,7 @@ namespace Util.Config
             {
                 throw new Exception($"Key={key}的配置不存在!");
             }
-            return mConfiguration.AppSettings.Settings[key
-].Value;
+            return mConfiguration.AppSettings.Settings[key].Value;
         }
 
         /// <summary>

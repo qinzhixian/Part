@@ -45,7 +45,7 @@ namespace Util.IO
         /// <param name="isSkipExistsDirOrFile">是否跳过存在的目录或文件</param>
         public static void Copy(string oldDirPath, string newDirPath, bool isSkipExistsDirOrFile = true)
         {
-            if (Exists(oldDirPath))
+            if (!Exists(oldDirPath))
                 throw new Util.Exception("原始目录不存在！");
 
             string[] directories = GetDirs(oldDirPath);

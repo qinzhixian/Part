@@ -112,8 +112,6 @@ namespace Util
         /// <returns></returns>
         public static string GetNo(bool appendRandom = false)
         {
-            return Math.Abs(Guid.NewGuid().ToString().GetHashCode()).ToString();
-
             string code = Now.ToString("yyyyMMddHHmmss");
 
             if (appendRandom)

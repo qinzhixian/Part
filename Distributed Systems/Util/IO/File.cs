@@ -36,7 +36,7 @@ namespace Util.IO
                 if (Exists(newFilePath))
                     throw new Util.Exception("新文件已存在！");
 
-                Copy(oldFilePath, newFilePath);
+                SIO.File.Copy(oldFilePath, newFilePath);
             }
         }
 
@@ -114,7 +114,7 @@ namespace Util.IO
 
             lock (locker)
             {
-                Move(oldFilePath, newFilePath);
+                SIO.File.Move(oldFilePath, newFilePath);
             }
         }
 
@@ -142,9 +142,9 @@ namespace Util.IO
         private static void SaveFile(string filePath, string content, Encoding encoding, bool isOverride = false, bool isNewLine = true)
         {
             if (string.IsNullOrEmpty(filePath) || string.IsNullOrEmpty(filePath))
-                throw new Util.Exception("操作不正确！");
-            string dirPath = Util.IO.Directory.GetDirPath(filePath);
-            Util.IO.Directory.Create(dirPath);
+                throw new Exception("操作不正确！");
+            string dirPath = Directory.GetDirPath(filePath);
+            Directory.Create(dirPath);
 
             var fileModel = SIO.FileMode.OpenOrCreate;
             if (isOverride)

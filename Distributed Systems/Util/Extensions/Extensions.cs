@@ -84,7 +84,7 @@ namespace Util.Extensions
         public static int IfNullOrEmpty(this string str, int val)
         {
             var result = val;
-            if (str != null && !string.IsNullOrEmpty(str))
+            if (!string.IsNullOrEmpty(str))
                 int.TryParse(str, out result);
             return result;
         }
