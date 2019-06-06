@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Threading;
 using System.Linq;
+using System.Threading.Tasks;
+using System.Collections.Generic;
+using System.Diagnostics;
 
 namespace TestApplication
 {
@@ -45,8 +48,54 @@ namespace TestApplication
 
                 #endregion
 
-                var data = Guid.NewGuid().ToString();
-             }
+                //Util.Web.IISHelper.CreateSite("mySite", 3389, @"D:\WebSite\XingJiManage");
+
+
+                //var task = new TaskFactory().StartNew(() =>
+                //{
+                //    Console.WriteLine("1");
+                //}).ContinueWith((s) =>
+                //{
+                //    Console.WriteLine("2");
+                //});
+
+                //List<Task> list = new List<Task>() { task };
+                //Task.WaitAll(list.ToArray());
+
+                Console.WriteLine("start");
+
+
+                Util.Reflection.Assembly assembly = new Util.Reflection.Assembly();
+                assembly.Init();
+
+                Stopwatch sw = new Stopwatch();
+                sw.Start();
+
+                for (int i = 0; i < 10000; i++)
+                {
+                    var res = assembly.CallStaticMethod("DateTime", "ToDateTime", new object[] { "2019-06-05" });
+                }
+
+                sw.Stop();
+
+                var first = sw.ElapsedTicks;
+
+
+                sw.Restart();
+
+                for (int i = 0; i < 10000; i++)
+                {
+                    Util.DateTime.ToDateTime("2019-06-05");
+                }
+
+                sw.Stop();
+
+                var secend = sw.ElapsedTicks;
+
+                Console.WriteLine("end");
+
+
+            }
             catch (Exception ex)
             {
                 Console.WriteLine(ex);

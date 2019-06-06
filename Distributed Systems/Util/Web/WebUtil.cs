@@ -57,6 +57,16 @@ namespace Util.Web
             }
         }
 
+        public static string Send(string method, string url, object sendData)
+        {
+            using (WebClient client = new WebClient())
+            {
+                client.Encoding = Encoding.UTF8;
+                byte[] data = client.UploadData(url, method, client.Encoding.GetBytes(UrlEncode(Util.Json.Serialize(sendData))));
+                return client.Encoding.GetString(data);
+            }
+        }
+
         /// <summary>
         /// 下载文件
         /// </summary>
@@ -171,7 +181,7 @@ namespace Util.Web
         /// <returns></returns>
         public static string UrlEncode(string str, Encoding encoding)
         {
-            return HttpUtility.UrlEncode(str, System.Text.Encoding.Unicode);
+            return HttpUtility.UrlEncode(str, System.Text.Encoding.UTF8);
         }
 
         #endregion
