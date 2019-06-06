@@ -65,32 +65,7 @@ namespace TestApplication
                 Console.WriteLine("start");
 
 
-                Util.Reflection.Assembly assembly = new Util.Reflection.Assembly();
-                assembly.Init();
-
-                Stopwatch sw = new Stopwatch();
-                sw.Start();
-
-                for (int i = 0; i < 10000; i++)
-                {
-                    var res = assembly.CallStaticMethod("DateTime", "ToDateTime", new object[] { "2019-06-05" });
-                }
-
-                sw.Stop();
-
-                var first = sw.ElapsedTicks;
-
-
-                sw.Restart();
-
-                for (int i = 0; i < 10000; i++)
-                {
-                    Util.DateTime.ToDateTime("2019-06-05");
-                }
-
-                sw.Stop();
-
-                var secend = sw.ElapsedTicks;
+                var res = Util.Reflection.ReflectionUtil.CallStaticMethod("Util", "IpUtil", "GetIpList");
 
                 Console.WriteLine("end");
 

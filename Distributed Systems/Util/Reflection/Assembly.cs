@@ -11,56 +11,12 @@ namespace Util.Reflection
 {
     public class Assembly
     {
-        private static readonly Dictionary<string, List<APIModel>> APIDic = new Dictionary<string, List<APIModel>>();
-
-        private static ConcurrentDictionary<string, MethodInfo> mMethodCache = new ConcurrentDictionary<string, MethodInfo>();
+        
 
 
         public void Init()
         {
-            Type[] types = System.Reflection.Assembly.GetExecutingAssembly().GetTypes();
-            foreach (var classItem in types)
-            {
-                ModuleInfoAttribute[] moduleArray = classItem.GetCustomAttributes(typeof(ModuleInfoAttribute), false) as ModuleInfoAttribute[];
-                if (moduleArray != null && moduleArray.Length <= 0)
-                {
-                    continue;
-                }
-
-                MethodInfo[] methods = classItem.GetMethods(BindingFlags.Public | BindingFlags.Static);
-
-                if (methods == null)
-                {
-                    continue;
-                }
-
-                foreach (var method in methods)
-                {
-                    var methodArray = method.GetCustomAttributes(typeof(MethodInfoAttribute), false);
-                    if (methodArray != null && methodArray.Length <= 0)
-                    {
-                        continue;
-                    }
-
-                    APIModel api = new APIModel()
-                    {
-                        ModuleName = moduleArray[0].ModuleName,
-                        MethodName = method.Name,
-                        Link = string.Format("{0}/{1}", classItem.Name, method.Name),
-                        Remark = GetMethodRemarks(method),
-                        Parames = GetParamTypes(method)
-                    };
-
-                    if (!APIDic.ContainsKey(api.ModuleName))
-                    {
-                        APIDic[api.ModuleName] = new List<APIModel>();
-                    }
-
-                    APIDic[api.ModuleName].Add(api);
-
-                    mMethodCache.TryAdd(string.Format("{0}/{1}", classItem.Name, method.Name), method);
-                }
-            }
+            
         }
 
         /// <summary>
