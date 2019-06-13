@@ -10,12 +10,12 @@ namespace Util.Config
     /// <summary>
     /// AppConfig帮助类
     /// </summary>
-    public static class AppConfigUtil
+    public static class ConfigUtil
     {
         private const string ConfigFileNotSpecified = "请指定需要读取的配置文件";
         private static Configuration mConfiguration;
 
-        static AppConfigUtil()
+        static ConfigUtil()
         {
             List<string> list = new List<string>();
             foreach (string str in Directory.GetFiles(AppDomain.CurrentDomain.BaseDirectory, "*.config"))
@@ -42,11 +42,11 @@ namespace Util.Config
         {
             if (mConfiguration == null)
             {
-                throw new Exception("请指定需要读取的配置文件");
+                throw new Util.Exception.ExceptionUtil("请指定需要读取的配置文件");
             }
             if (!mConfiguration.AppSettings.Settings.AllKeys.Contains<string>(key))
             {
-                throw new Exception($"Key={key}的配置不存在!");
+                throw new Util.Exception.ExceptionUtil($"Key={key}的配置不存在!");
             }
             return mConfiguration.AppSettings.Settings[key].Value;
         }
@@ -84,7 +84,7 @@ namespace Util.Config
         {
             if (mConfiguration == null)
             {
-                throw new Exception("请指定需要读取的配置文件");
+                throw new Util.Exception.ExceptionUtil("请指定需要读取的配置文件");
             }
             if (mConfiguration.AppSettings.Settings.AllKeys.Contains<string>(newKey))
             {
@@ -104,7 +104,7 @@ namespace Util.Config
         {
             if (mConfiguration == null)
             {
-                throw new Exception("请指定需要读取的配置文件");
+                throw new Util.Exception.ExceptionUtil("请指定需要读取的配置文件");
             }
             if (mConfiguration.ConnectionStrings.ConnectionStrings[newName] != null)
             {

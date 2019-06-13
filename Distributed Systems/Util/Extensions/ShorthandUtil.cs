@@ -5,7 +5,7 @@ namespace Util.Extensions
     /// <summary>
     /// 中文处理类
     /// </summary>
-    public class Shorthand
+    public class ShorthandUtil
     {
         /// <summary>
         /// 获取首字母(小写)

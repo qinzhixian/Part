@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Specialized;
 using System.Net;
+using System.Net.Http;
 using System.Text;
 using System.Web;
 
@@ -62,7 +63,7 @@ namespace Util.Web
             using (WebClient client = new WebClient())
             {
                 client.Encoding = Encoding.UTF8;
-                byte[] data = client.UploadData(url, method, client.Encoding.GetBytes(UrlEncode(Util.Json.Serialize(sendData))));
+                byte[] data = client.UploadData(url, method, client.Encoding.GetBytes(UrlEncode(Util.Json.JsonUtil.Serialize(sendData))));
                 return client.Encoding.GetString(data);
             }
         }
@@ -83,7 +84,7 @@ namespace Util.Web
                 catch (System.Exception ex)
                 {
 
-                    throw new Util.Exception("下载文件失败！", ex);
+                    throw new Util.Exception.ExceptionUtil("下载文件失败！", ex);
                 }
 
             }
@@ -182,6 +183,65 @@ namespace Util.Web
         public static string UrlEncode(string str, Encoding encoding)
         {
             return HttpUtility.UrlEncode(str, System.Text.Encoding.UTF8);
+        }
+
+        #endregion
+
+        #region Request操作
+
+        /// <summary>
+        /// 获取请求的参数
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        public static string GetResponseParame(System.Web.HttpRequestBase request)
+        {
+            string parame = string.Empty;
+
+            string method = request.HttpMethod;
+
+            if (method == System.Net.Http.HttpMethod.Get.Method)
+            {
+                parame = request.Url.Query;
+            }
+            else if (method == System.Net.Http.HttpMethod.Post.Method)
+            {
+                //parame = request.Form.ToString();
+
+                parame = Encoding.UTF8.GetString(request.BinaryRead(request.TotalBytes));
+            }
+
+            return parame;
+        }
+
+        /// <summary>
+        /// 获取请求地址
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        public static string GetRequestUrl(System.Web.HttpRequestBase request)
+        {
+            return string.Format("{0}{1}", request.Url.ToString().Split(new string[] { "?" }, StringSplitOptions.RemoveEmptyEntries)[0], request.Url.AbsolutePath);
+        }
+
+        /// <summary>
+        /// 转换
+        /// </summary>
+        /// <param name="context"></param>
+        /// <returns></returns>
+        public static System.Web.HttpContextBase TransToBase(System.Web.HttpContext context)
+        {
+            return new System.Web.HttpContextWrapper(context);
+        }
+
+        /// <summary>
+        /// 转换
+        /// </summary>
+        /// <param name="context"></param>
+        /// <returns></returns>
+        public static System.Web.HttpRequestBase TransToBase(System.Web.HttpRequest context)
+        {
+            return new System.Web.HttpRequestWrapper(context);
         }
 
         #endregion

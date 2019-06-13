@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Util
+namespace Util.Log
 {
     /// <summary>
     /// 日志类别枚举 

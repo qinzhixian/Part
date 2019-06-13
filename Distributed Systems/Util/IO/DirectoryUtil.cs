@@ -8,7 +8,7 @@ namespace Util.IO
     /// 线程安全类
     /// 可能引发的异常：Util.Exception
     /// </summary>
-    public static class Directory
+    public static class DirectoryUtil
     {
         #region 私有成员
 
@@ -26,7 +26,7 @@ namespace Util.IO
         {
             if (string.IsNullOrEmpty(dirPath))
             {
-                throw new Util.Exception("目录路径不能为空！");
+                throw new Util.Exception.ExceptionUtil("目录路径不能为空！");
             }
             if (Exists(dirPath))
                 return;
@@ -46,7 +46,7 @@ namespace Util.IO
         public static void Copy(string oldDirPath, string newDirPath, bool isSkipExistsDirOrFile = true)
         {
             if (!Exists(oldDirPath))
-                throw new Util.Exception("原始目录不存在！");
+                throw new Util.Exception.ExceptionUtil("原始目录不存在！");
 
             string[] directories = GetDirs(oldDirPath);
             string[] files = GetDirFiles(oldDirPath);
@@ -67,7 +67,7 @@ namespace Util.IO
 
                 foreach (string file in files)
                 {
-                    Util.IO.File.Copy(file, newDirPath + file.Substring(file.LastIndexOf(@"\")));
+                    Util.IO.FileUtil.Copy(file, newDirPath + file.Substring(file.LastIndexOf(@"\")));
                 }
             }
         }
@@ -143,7 +143,7 @@ namespace Util.IO
         public static string[] GetDirs(string dirPath)
         {
             if (!Exists(dirPath))
-                throw new Util.Exception("目录不存在！");
+                throw new Util.Exception.ExceptionUtil("目录不存在！");
             return SIO.Directory.GetDirectories(dirPath);
         }
 
@@ -155,7 +155,7 @@ namespace Util.IO
         public static string[] GetDirFiles(string dirPath)
         {
             if (!Exists(dirPath))
-                throw new Util.Exception("目录不存在！");
+                throw new Util.Exception.ExceptionUtil("目录不存在！");
 
             return SIO.Directory.GetFiles(dirPath, "*.*", SIO.SearchOption.TopDirectoryOnly);
         }
@@ -169,7 +169,7 @@ namespace Util.IO
         public static string[] GetDirFiles(string dirPath, string searchPattern)
         {
             if (!Exists(dirPath))
-                throw new Util.Exception("目录不存在！");
+                throw new Util.Exception.ExceptionUtil("目录不存在！");
 
             return SIO.Directory.GetFiles(dirPath, searchPattern);
         }
@@ -183,7 +183,7 @@ namespace Util.IO
         public static string[] GetDirFiles(string dirPath, SIO.SearchOption so)
         {
             if (!Exists(dirPath))
-                throw new Util.Exception("目录不存在！");
+                throw new Util.Exception.ExceptionUtil("目录不存在！");
 
             return SIO.Directory.GetFiles(dirPath, "*.*", so);
         }
@@ -198,7 +198,7 @@ namespace Util.IO
         public static string[] GetDirFiles(string dirPath, string searchPattern, SIO.SearchOption so)
         {
             if (!Exists(dirPath))
-                throw new Util.Exception("目录不存在！");
+                throw new Util.Exception.ExceptionUtil("目录不存在！");
 
             return SIO.Directory.GetFiles(dirPath, searchPattern, so);
         }
@@ -211,7 +211,7 @@ namespace Util.IO
         public static bool IsEmptyDirectory(string dirPath)
         {
             if (!Exists(dirPath))
-                throw new Util.Exception("目录不存在！");
+                throw new Util.Exception.ExceptionUtil("目录不存在！");
 
             //判断是否存在文件
             string[] fileNames = GetFiles(dirPath);
@@ -256,7 +256,7 @@ namespace Util.IO
         public static string[] GetFiles(string dirPath)
         {
             if (!Exists(dirPath))
-                throw new Util.Exception("目录不存在！");
+                throw new Util.Exception.ExceptionUtil("目录不存在！");
 
             return SIO.Directory.GetFiles(dirPath);
         }
@@ -272,7 +272,7 @@ namespace Util.IO
         public static string[] GetFiles(string dirPath, string searchPattern, bool isSearchChild)
         {
             if (!Exists(dirPath))
-                throw new Util.Exception("目录不存在！");
+                throw new Util.Exception.ExceptionUtil("目录不存在！");
 
             return SIO.Directory.GetFiles(dirPath, searchPattern, isSearchChild ? SIO.SearchOption.AllDirectories : SIO.SearchOption.TopDirectoryOnly);
         }

@@ -42,7 +42,7 @@ namespace Util
                     return txt;
                 }
             }
-            catch (Exception ex)
+            catch (System.Exception ex)
             {
                 return ex.Message;
             }

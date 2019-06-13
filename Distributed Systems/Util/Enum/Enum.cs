@@ -39,7 +39,7 @@ namespace Util
             }
             catch (System.Exception ex)
             {
-                throw new Util.Exception($"转换枚举失败！错误信息：{ex.Message}", ex);
+                throw new Util.Exception.ExceptionUtil($"转换枚举失败！错误信息：{ex.Message}", ex);
             }
         }
 

@@ -22,7 +22,7 @@ namespace ImageCenter
         {
             string locaAbsPath = string.Format("{0}/{1}/", Static.FileDirPath, Util.Enum.GetDescriptionString(imageType));
 
-            Util.IO.Directory.Create(locaAbsPath);
+            Util.IO.DirectoryUtil.Create(locaAbsPath);
 
             StringBuilder result = new StringBuilder();
 
@@ -35,7 +35,7 @@ namespace ImageCenter
                     continue;
                 }
 
-                string filename = Util.Utility.MD5.GetMD5(string.Format("{0}{1}{2}{3}", DateTime.Now.ToString(), Static.ImageFileOrg, i, Guid.NewGuid()));
+                string filename = Util.Utility.MD5.GetMD5_16(string.Format("{0}{1}{2}{3}", DateTime.Now.ToString(), Static.ImageFileOrg, i, Guid.NewGuid()));
                 string fileAbsPath = string.Format("{0}{1}{2}", locaAbsPath, filename, ".jpg");
                 string newfileAbsPath = EncryptImageNameAndPath(fileAbsPath);
 

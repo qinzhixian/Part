@@ -5,7 +5,7 @@ namespace Util.Extensions
     /// <summary>
     /// 扩展帮助类
     /// </summary>
-    public static class Extensions
+    public static class ExtensionsUtil
     {
         /// <summary>
         ///     替换系统IF

@@ -240,7 +240,7 @@ namespace DataCenter
             {
 
             }
-            list = JArray.Parse(Util.Json.Serialize(dataList)).ToObject<List<T>>();
+            list = JArray.Parse(Util.Json.JsonUtil.Serialize(dataList)).ToObject<List<T>>();
             return list;
         }
 
@@ -262,7 +262,7 @@ namespace DataCenter
 
             pageCount = ComputePageCount(pageSize, data.Count);
 
-            return JArray.Parse(Util.Json.Serialize(list)).ToObject<List<T>>();
+            return JArray.Parse(Util.Json.JsonUtil.Serialize(list)).ToObject<List<T>>();
         }
 
         /// <summary>
@@ -280,7 +280,7 @@ namespace DataCenter
 
             var data = GlobalData[type];
 
-            var list = Util.Json.Deseriailze<List<T>>(Util.Json.Serialize(data)).Where(where).Skip((pageIndex - 1) * pageSize).Take(pageSize).ToList();
+            var list = Util.Json.JsonUtil.Deseriailze<List<T>>(Util.Json.JsonUtil.Serialize(data)).Where(where).Skip((pageIndex - 1) * pageSize).Take(pageSize).ToList();
 
             pageCount = ComputePageCount(pageSize, data.Count);
 

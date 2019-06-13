@@ -1,9 +1,9 @@
-﻿namespace Util
+﻿namespace Util.Exception
 {
     /// <summary>
     /// 异常类
     /// </summary>
-    public class Exception : System.Exception
+    public class ExceptionUtil : System.Exception
     {
         /// <summary>
         /// 异常消息
@@ -21,7 +21,7 @@
         /// 创建一个新的异常
         /// </summary>
         /// <param name="message">异常信息</param>
-        public Exception(string message, ExceptionType exceptionType = ExceptionType.UnKnown)
+        public ExceptionUtil(string message, ExceptionType exceptionType = ExceptionType.UnKnown)
         {
             Message = message;
             ExceptionType = exceptionType;
@@ -32,7 +32,7 @@
         /// </summary>
         /// <param name="message">异常信息</param>
         /// <param name="exception">异常</param>
-        public Exception(string message, System.Exception exception, ExceptionType exceptionType = ExceptionType.UnKnown)
+        public ExceptionUtil(string message, System.Exception exception, ExceptionType exceptionType = ExceptionType.UnKnown)
         {
             Message = message;
             InnerException = exception;

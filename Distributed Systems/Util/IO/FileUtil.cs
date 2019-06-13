@@ -9,7 +9,7 @@ namespace Util.IO
     /// 线程安全类
     /// 可能引发的异常：Util.Exception
     /// </summary>
-    public static class File
+    public static class FileUtil
     {
         #region 私有成员
 
@@ -32,9 +32,9 @@ namespace Util.IO
             lock (locker)
             {
                 if (!Exists(oldFilePath))
-                    throw new Util.Exception("源文件不存在！");
+                    throw new Util.Exception.ExceptionUtil("源文件不存在！");
                 if (Exists(newFilePath))
-                    throw new Util.Exception("新文件已存在！");
+                    throw new Util.Exception.ExceptionUtil("新文件已存在！");
 
                 SIO.File.Copy(oldFilePath, newFilePath);
             }
@@ -108,9 +108,9 @@ namespace Util.IO
         public static void Move(string oldFilePath, string newFilePath)
         {
             if (!Exists(oldFilePath))
-                throw new Util.Exception("源文件不存在！");
+                throw new Util.Exception.ExceptionUtil("源文件不存在！");
             if (Exists(newFilePath))
-                throw new Util.Exception("新文件已存在！");
+                throw new Util.Exception.ExceptionUtil("新文件已存在！");
 
             lock (locker)
             {
@@ -142,9 +142,9 @@ namespace Util.IO
         private static void SaveFile(string filePath, string content, Encoding encoding, bool isOverride = false, bool isNewLine = true)
         {
             if (string.IsNullOrEmpty(filePath) || string.IsNullOrEmpty(filePath))
-                throw new Exception("操作不正确！");
-            string dirPath = Directory.GetDirPath(filePath);
-            Directory.Create(dirPath);
+                throw new Util.Exception.ExceptionUtil("操作不正确！");
+            string dirPath = DirectoryUtil.GetDirPath(filePath);
+            DirectoryUtil.Create(dirPath);
 
             var fileModel = SIO.FileMode.OpenOrCreate;
             if (isOverride)

@@ -5,12 +5,12 @@ using System.Net.Mail;
 using System.Runtime.InteropServices;
 using System.Text;
 
-namespace Util
+namespace Util.Email
 {
     /// <summary>
     /// 邮件帮助类
     /// </summary>
-    public class Email : IDisposable
+    public class EmailUtil : IDisposable
     {
         #region 私有成员
 
@@ -25,7 +25,7 @@ namespace Util
         /// <param name="password">发送者密码</param>
         /// <param name="smtp">Smtp地址</param>
         /// <param name="port">端口</param>
-        public Email(string userName, string password, string smtp, int port)
+        public EmailUtil(string userName, string password, string smtp, int port)
         {
             this._Client = new SmtpClient();
             this._Client.UseDefaultCredentials = true;

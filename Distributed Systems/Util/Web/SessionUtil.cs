@@ -5,7 +5,7 @@ namespace Util.Web
     /// <summary>
     /// HttpSession操作类
     /// </summary>
-    public static class Session
+    public static class SessionUtil
     {
         /// <summary>
         /// 获取Session

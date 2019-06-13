@@ -19,6 +19,7 @@ namespace Util.IO
                 return stream2.ToArray();
             }
         }
+
         public static MemoryStream CopyStream(Stream stream)
         {
             MemoryStream stream2 = new MemoryStream();
@@ -30,6 +31,7 @@ namespace Util.IO
             }
             return stream2;
         }
+
         public static Bitmap CovertDataToBitmap(byte[] data)
         {
             Bitmap bitmap;
@@ -43,6 +45,7 @@ namespace Util.IO
             }
             return bitmap;
         }
+
         public static Bitmap ResizeImage(Bitmap mg, Size newSize)
         {
             double num = 0.0;
@@ -72,11 +75,13 @@ namespace Util.IO
             graphics.DrawImage(mg, destRect, 0, 0, mg.Width, mg.Height, GraphicsUnit.Pixel);
             return image;
         }
+
         public static void ResizeImage(string sourcefullname, int dispMaxWidth, int dispMaxHeight)
         {
             FileInfo info = new FileInfo(sourcefullname);
             ResizeImage(sourcefullname, dispMaxWidth, dispMaxHeight, info.FullName);
         }
+
         public static void ResizeImage(string sourcefullname, int dispMaxWidth, int dispMaxHeight, string outputFullName)
         {
             MemoryStream stream = new MemoryStream();

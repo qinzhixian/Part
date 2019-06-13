@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Util.Web
 {
-    public static class Html
+    public static class HtmlUtil
     {
         ///<summary>   
         ///清除HTML标记   
@@ -130,6 +130,6 @@ namespace Util.Web
             }
             return rStr;
         }
-        
+
     }
 }

@@ -6,14 +6,14 @@ using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 
-namespace Util
+namespace Util.Json
 {
     /// <summary>
     /// Json类
     /// </summary>
-    public static class Json
+    public static class JsonUtil
     {
-        static Json()
+        static JsonUtil()
         {
             IsoDateTimeConverter timeFormat = new IsoDateTimeConverter();
             timeFormat.DateTimeFormat = "yyyy-MM-dd HH:mm:ss";
@@ -28,7 +28,7 @@ namespace Util
         public static string Serialize(object data)
         {
             if (data == null || string.IsNullOrEmpty(data.ToString()))
-                throw new Util.Exception("要序列化的数据不能为空！");
+                throw new Util.Exception.ExceptionUtil("要序列化的数据不能为空！");
             return JsonConvert.SerializeObject(data);
         }
         
