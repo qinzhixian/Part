@@ -1,18 +1,84 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Net;
 using System.Net.Http;
+using System.Reflection;
 using System.Text;
 using System.Web;
+using Util.Json;
 
 namespace Util.Web
 {
     /// <summary>
     /// Http帮助类
     /// </summary>
-    public class WebUtil
+    public static class WebUtil
     {
-        #region Web操作
+        public static string GetResponseParame(HttpRequest request)
+        {
+            if (request == null)
+                return string.Empty;
+
+            if (request.Form == null)
+            {
+                return UrlDeCode(request.Form.ToString());
+            }
+            return UrlDeCode(request.QueryString.ToString());
+        }
+
+        public static string GetRequestUrl(HttpRequest request)
+        {
+            if (request == null)
+                return string.Empty;
+
+            return UrlDeCode(request.RawUrl);
+        }
+
+
+        /// <summary>
+        /// Url解码
+        /// </summary>
+        /// <param name="str">要解码的字符串</param>
+        /// <returns></returns>
+        public static string UrlDeCode(string str)
+        {
+            return UrlDeCode(str, Encoding.UTF8);
+        }
+
+        /// <summary>
+        /// Url解码
+        /// </summary>
+        /// <param name="str">要解码的字符串</param>
+        /// <param name="encoding">解码的编码格式</param>
+        /// <returns></returns>
+        public static string UrlDeCode(string str, Encoding encoding)
+        {
+            return HttpUtility.UrlDecode(str, encoding);
+        }
+
+        /// <summary>
+        /// Url编码
+        /// </summary>
+        /// <param name="str">要编码的Url字符串</param>
+        /// <returns></returns>
+        public static string UrlEncode(string str)
+        {
+            return UrlEncode(str, Encoding.UTF8);
+        }
+
+        /// <summary>
+        /// Url编码
+        /// </summary>
+        /// <param name="str">要编码的Url字符串</param>
+        /// <param name="encoding">编码的格式</param>
+        /// <returns></returns>
+        public static string UrlEncode(string str, Encoding encoding)
+        {
+            return HttpUtility.UrlEncode(str, encoding);
+        }
+
+
 
         /// <summary>
         /// 获取网络数据(Method:Get)
@@ -58,12 +124,44 @@ namespace Util.Web
             }
         }
 
+        /// <summary>
+        /// 获取网络数据(Method:Post)
+        /// </summary>
+        /// <param name="url">网络数据地址</param>
+        /// <param name="formdata">请求携带参数</param>
+        /// <param name="encoding">数据编码</param>
+        /// <param name="headers">请求标头</param>
+        /// <returns></returns>
+        public static string Post(string url, object data, Encoding encoding = null, NameValueCollection headers = null)
+        {
+            using (WebClient client = new WebClient())
+            {
+                client.Encoding = encoding != null ? encoding : Encoding.UTF8;
+
+                if (headers != null)
+                {
+                    client.Headers.Add(headers);
+                }
+
+                NameValueCollection postData = new NameValueCollection();
+                foreach (PropertyInfo pinfo in data.GetType().GetProperties())
+                {
+                    NameValueCollection item = new NameValueCollection();
+                    item.Add(pinfo.Name, pinfo.GetValue(data, null).ToString());
+                    postData.Add(item);
+                }
+
+
+                return client.Encoding.GetString(client.UploadValues(url, "POST", postData));
+            }
+        }
+
         public static string Send(string method, string url, object sendData)
         {
             using (WebClient client = new WebClient())
             {
                 client.Encoding = Encoding.UTF8;
-                byte[] data = client.UploadData(url, method, client.Encoding.GetBytes(UrlEncode(Util.Json.JsonUtil.Serialize(sendData))));
+                byte[] data = client.UploadData(url, method, client.Encoding.GetBytes(UrlEncode(JsonUtil.Serialize(sendData))));
                 return client.Encoding.GetString(data);
             }
         }
@@ -77,16 +175,7 @@ namespace Util.Web
         {
             using (WebClient client = new WebClient())
             {
-                try
-                {
-                    client.DownloadFile(url, saveFilePath);
-                }
-                catch (System.Exception ex)
-                {
-
-                    throw new Util.Exception.ExceptionUtil("下载文件失败！", ex);
-                }
-
+                client.DownloadFile(url, saveFilePath);
             }
         }
 
@@ -138,113 +227,5 @@ namespace Util.Web
                 client.UploadFileAsync(new Uri(url), "Http", fileFullName);
             }
         }
-
-        #endregion
-
-        #region Url操作
-
-        /// <summary>
-        /// Url解码
-        /// </summary>
-        /// <param name="str">要解码的字符串</param>
-        /// <returns></returns>
-        public static string UrlDeCode(string str)
-        {
-            return UrlDeCode(str, Encoding.UTF8);
-        }
-
-        /// <summary>
-        /// Url解码
-        /// </summary>
-        /// <param name="str">要解码的字符串</param>
-        /// <param name="encoding">解码的编码格式</param>
-        /// <returns></returns>
-        public static string UrlDeCode(string str, Encoding encoding)
-        {
-            return HttpUtility.UrlDecode(str.ToUpper(), encoding);
-        }
-
-        /// <summary>
-        /// Url编码
-        /// </summary>
-        /// <param name="str">要编码的Url字符串</param>
-        /// <returns></returns>
-        public static string UrlEncode(string str)
-        {
-            return UrlEncode(str, Encoding.UTF8);
-        }
-
-        /// <summary>
-        /// Url编码
-        /// </summary>
-        /// <param name="str">要编码的Url字符串</param>
-        /// <param name="encoding">编码的格式</param>
-        /// <returns></returns>
-        public static string UrlEncode(string str, Encoding encoding)
-        {
-            return HttpUtility.UrlEncode(str, System.Text.Encoding.UTF8);
-        }
-
-        #endregion
-
-        #region Request操作
-
-        /// <summary>
-        /// 获取请求的参数
-        /// </summary>
-        /// <param name="request"></param>
-        /// <returns></returns>
-        public static string GetResponseParame(System.Web.HttpRequestBase request)
-        {
-            string parame = string.Empty;
-
-            string method = request.HttpMethod;
-
-            if (method == System.Net.Http.HttpMethod.Get.Method)
-            {
-                parame = request.Url.Query;
-            }
-            else if (method == System.Net.Http.HttpMethod.Post.Method)
-            {
-                //parame = request.Form.ToString();
-
-                parame = Encoding.UTF8.GetString(request.BinaryRead(request.TotalBytes));
-            }
-
-            return parame;
-        }
-
-        /// <summary>
-        /// 获取请求地址
-        /// </summary>
-        /// <param name="request"></param>
-        /// <returns></returns>
-        public static string GetRequestUrl(System.Web.HttpRequestBase request)
-        {
-            return string.Format("{0}{1}", request.Url.ToString().Split(new string[] { "?" }, StringSplitOptions.RemoveEmptyEntries)[0], request.Url.AbsolutePath);
-        }
-
-        /// <summary>
-        /// 转换
-        /// </summary>
-        /// <param name="context"></param>
-        /// <returns></returns>
-        public static System.Web.HttpContextBase TransToBase(System.Web.HttpContext context)
-        {
-            return new System.Web.HttpContextWrapper(context);
-        }
-
-        /// <summary>
-        /// 转换
-        /// </summary>
-        /// <param name="context"></param>
-        /// <returns></returns>
-        public static System.Web.HttpRequestBase TransToBase(System.Web.HttpRequest context)
-        {
-            return new System.Web.HttpRequestWrapper(context);
-        }
-
-        #endregion
-
     }
 }

@@ -59,9 +59,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Const\HttpContentType.cs" />
+    <Compile Include="Const\HttpStatusCode.cs" />
+    <Compile Include="DateTime\DateTimeCompare.cs" />
     <Compile Include="IO\StreamUtil.cs" />
     <Compile Include="IP\IpInfo.cs" />
     <Compile Include="IP\IpUtil.cs" />
+    <Compile Include="Log\LogConfig.cs" />
+    <Compile Include="Log\LogModel.cs" />
     <Compile Include="OS\ClientInfo.cs" />
     <Compile Include="Reflection\Interface\IRegisterMethods.cs" />
     <Compile Include="Reflection\ReflectionCache.cs" />
@@ -73,10 +78,10 @@
     <Compile Include="Const\WebConst.cs" />
     <Compile Include="DateTime\DateTimeUtil.cs" />
     <Compile Include="Email\EmailUtil.cs" />
-    <Compile Include="Enum\Enum.cs" />
+    <Compile Include="Enum\EnumUtil.cs" />
     <Compile Include="Exception\ExceptionType.cs" />
     <Compile Include="Exception\ExceptionUtil.cs" />
-    <Compile Include="Extensions\ExtensionsUtil.cs" />
+    <Compile Include="Extensions\StringExpansion.cs" />
     <Compile Include="Extensions\ShorthandUtil.cs" />
     <Compile Include="IO\FileUtil.cs" />
     <Compile Include="Json\JsonUtil.cs" />
@@ -85,6 +90,7 @@
     <Compile Include="Process\Process.cs" />
     <Compile Include="Reflection\ReflectionClass.cs" />
     <Compile Include="Reflection\ReflectionUtil.cs" />
+    <Compile Include="Task\TaskUtil.cs" />
     <Compile Include="Utility\AES.cs" />
     <Compile Include="Utility\Base64.cs" />
     <Compile Include="Utility\Convert.cs" />
