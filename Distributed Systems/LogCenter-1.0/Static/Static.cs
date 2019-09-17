@@ -27,7 +27,7 @@ namespace LogCenter
                 }
                 catch (Exception ex)
                 {
-                    Util.Log.LogUtil.Write(ex.ToString(), Util.Log.LogType.Error);
+                    Util.LogUtil.Write(ex.ToString(), Util.LogType.Error);
                 }
             });
         }
@@ -45,7 +45,7 @@ namespace LogCenter
             }
             catch (Exception ex)
             {
-                AddLog(string.Format("添加日志是发生错误！错误原因：{0}", ex.Message), Util.Log.LogType.Error);
+                AddLog(string.Format("添加日志是发生错误！错误原因：{0}", ex.Message), Util.LogType.Error);
             }
 
         }
@@ -55,7 +55,7 @@ namespace LogCenter
         /// </summary>
         /// <param name="content"></param>
         /// <param name="logType"></param>
-        internal static void AddLog(string content, Util.Log.LogType logType)
+        internal static void AddLog(string content, Util.LogType logType)
         {
             AddLog(new LogModel { AddTime = DateTime.Now, Content = content, LogType = logType });
         }

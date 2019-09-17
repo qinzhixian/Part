@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 
-namespace Util.Json
+namespace Util
 {
     /// <summary>
     /// Json类
@@ -70,7 +70,7 @@ namespace Util.Json
             {
                 JsonParse(jsonStr.ToString());
             }
-            catch (System.Exception)
+            catch (Exception)
             {
                 return false;
             }

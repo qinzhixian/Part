@@ -55,8 +55,8 @@ namespace DataCenter
         {
             get
             {
-                var path = Util.IO.DirectoryUtil.GetCurrentDirectory() + "/Data/";
-                Util.IO.DirectoryUtil.Create(path);
+                var path = Util.IO.Directory.GetCurrentDirectory() + "/Data/";
+                Util.IO.Directory.Create(path);
 
                 return path;
             }
@@ -252,7 +252,7 @@ namespace DataCenter
             {
 
             }
-            list = JArray.Parse(Util.Json.JsonUtil.Serialize(dataList)).ToObject<List<T>>();
+            list = JArray.Parse(Util.JsonUtil.Serialize(dataList)).ToObject<List<T>>();
             return list;
         }
 
@@ -274,7 +274,7 @@ namespace DataCenter
 
             pageCount = ComputePageCount(pageSize, data.Count);
 
-            return JArray.Parse(Util.Json.JsonUtil.Serialize(list)).ToObject<List<T>>();
+            return JArray.Parse(Util.JsonUtil.Serialize(list)).ToObject<List<T>>();
         }
 
         /// <summary>
@@ -292,7 +292,7 @@ namespace DataCenter
 
             var data = GlobalData[type];
 
-            var list = Util.Json.JsonUtil.Deseriailze<List<T>>(Util.Json.JsonUtil.Serialize(data)).Where(where).Skip((pageIndex - 1) * pageSize).Take(pageSize).ToList();
+            var list = Util.JsonUtil.Deseriailze<List<T>>(Util.JsonUtil.Serialize(data)).Where(where).Skip((pageIndex - 1) * pageSize).Take(pageSize).ToList();
 
             pageCount = ComputePageCount(pageSize, data.Count);
 

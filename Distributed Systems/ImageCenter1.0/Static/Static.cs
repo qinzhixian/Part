@@ -11,6 +11,6 @@ namespace ImageCenter
        
         public const string ImageFileOrg = "ImageServer";
 
-        public static string FileDirPath { get { return string.Format("{0}/Files/Images/", Util.IO.DirectoryUtil.GetCurrentDirectory()); } }
+        public static string FileDirPath { get { return string.Format("{0}/Files/Images/", Util.IO.Directory.GetCurrentDirectory()); } }
     }
 }

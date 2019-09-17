@@ -31,7 +31,7 @@ namespace LogCenter
                         {
                             AddTime = System.DateTime.Now,
                             Content = string.Format("记录日志时发生错误！错误原因：{0}", ex.Message),
-                            LogType = Util.Log.LogType.Error
+                            LogType = Util.LogType.Error
                         });
                     }
                 }
@@ -45,7 +45,7 @@ namespace LogCenter
         /// <param name="log"></param>
         private static void WriteLog(LogModel log)
         {
-            Util.Log.LogUtil.Write(string.Format("{0}", log.Content), log.LogType);
+            Util.LogUtil.Write(string.Format("{0}", log.Content), log.LogType);
         }
 
     }

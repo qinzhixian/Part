@@ -28,18 +28,18 @@ namespace DataCenter
         public static string GetDataFilePath(Type type, string dataDirPath)
         {
             var dirPath = string.Format("{0}/", dataDirPath);
-            Util.IO.DirectoryUtil.Create(dirPath);
+            Util.IO.Directory.Create(dirPath);
 
             var fileName = type.Name;
 
             if (DataIsEncrypt)
             {
-                fileName = Util.Utility.MD5.GetMD5_16(Util.Utility.Base64.Encrypt(fileName));
+                fileName = Util.Utility.MD5.GetMD5_32(Util.Utility.Base64.Encrypt(fileName));
             }
 
             string filePath = string.Format("{0}/{1}.data", dirPath, fileName);
 
-            Util.IO.FileUtil.Create(filePath);
+            Util.IO.File.Create(filePath);
 
             return filePath;
         }
@@ -52,7 +52,7 @@ namespace DataCenter
         /// <returns></returns>
         public static List<object> ReadGlobalData(Type type, string dataFilePath)
         {
-            var jsonData = Util.IO.FileUtil.ReadFile(dataFilePath, Encoding.UTF8);
+            var jsonData = Util.IO.File.ReadFile(dataFilePath, Encoding.UTF8);
 
             if (!string.IsNullOrEmpty(jsonData))
             {
@@ -62,7 +62,7 @@ namespace DataCenter
                 }
             }
 
-            var list = Util.Json.JsonUtil.Deseriailze<List<object>>(jsonData);
+            var list = Util.JsonUtil.Deseriailze<List<object>>(jsonData);
             if (list == null || list.Count <= 0)
             {
                 list = new List<object>();
@@ -92,7 +92,7 @@ namespace DataCenter
             }
             globalData[type] = list.ConvertAll(s => (object)s);
 
-            var jsonData = Util.Json.JsonUtil.Serialize(list);
+            var jsonData = Util.JsonUtil.Serialize(list);
 
             if (!string.IsNullOrEmpty(jsonData))
             {
@@ -102,7 +102,7 @@ namespace DataCenter
                 }
             }
 
-            Util.IO.FileUtil.WriteFile(dataFilePath[type], jsonData, Encoding.UTF8, true);
+            Util.IO.File.WriteFile(dataFilePath[type], jsonData, Encoding.UTF8, true);
         }
 
         #endregion

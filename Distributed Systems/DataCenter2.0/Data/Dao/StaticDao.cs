@@ -13,8 +13,8 @@ namespace DataCenter
 
         private static string GetDataDirPath(Type type)
         {
-            var path = string.Format("{0}/Data/{1}", Util.IO.DirectoryUtil.GetCurrentDirectory(), type.Name);
-            Util.IO.DirectoryUtil.Create(path);
+            var path = string.Format("{0}/Data/{1}", Util.IO.Directory.GetCurrentDirectory(), type.Name);
+            Util.IO.Directory.Create(path);
 
             return path;
         }
@@ -32,7 +32,7 @@ namespace DataCenter
 
         private static string GetDataStr(object data)
         {
-            var dataStr = Util.Json.JsonUtil.Serialize(data);
+            var dataStr = Util.JsonUtil.Serialize(data);
 
             dataStr = Util.Utility.Base64.Encrypt(Util.Utility.AES.AesEncrypt(dataStr, DataAesKv));
 
@@ -79,16 +79,16 @@ namespace DataCenter
         public static List<object> ReadGlobalData(Type type, string dataFilePath)
         {
             List<object> list = new List<object>();
-            var files = Util.IO.DirectoryUtil.GetDirFiles(dataFilePath, "*.data");
+            var files = Util.IO.Directory.GetDirFiles(dataFilePath, "*.data");
 
             for (int i = 0; i < files.Length; i++)
             {
                 var item = files[i];
 
-                var jsonData = Util.IO.FileUtil.GetFileName(item, false);
+                var jsonData = Util.IO.File.GetFileName(item, false);
                 jsonData = Util.Utility.AES.AesDecrypt(Util.Utility.Base64.Decrypt(jsonData), DataAesKv);
 
-                var data = Util.Json.JsonUtil.Deseriailze<object>(jsonData);
+                var data = Util.JsonUtil.Deseriailze<object>(jsonData);
                 if (data != null)
                 {
                     list.Add(data);
@@ -100,12 +100,12 @@ namespace DataCenter
         public static void Add<T>(T data)
         {
             var path = GetDataFilePath(typeof(T), GetDataStr(data));
-            Util.IO.FileUtil.Create(path);
+            Util.IO.File.Create(path);
         }
 
         public static void Del<T>(T data)
         {
-            Util.IO.FileUtil.DeleteFile(GetDataFilePath(typeof(T), GetDataStr(data)));
+            Util.IO.File.DeleteFile(GetDataFilePath(typeof(T), GetDataStr(data)));
         }
 
         public static void Update<T>(T oldData, T newData)

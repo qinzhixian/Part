@@ -6,7 +6,7 @@ namespace Util.Web
     /// <summary>
     /// HttpCookie操作类
     /// </summary>
-    public static class CookiesUtil
+    public static class Cookies
     {
         /// <summary>
         /// 删除一个Cookie
@@ -42,7 +42,7 @@ namespace Util.Web
         /// <param name="value"></param>
         public static void SetCookie(string name, string value)
         {
-            SetCookie(name, value, Util.DateTime.DateTimeUtil.Now.AddHours(24));
+            SetCookie(name, value, DateTime.Now.AddHours(24));
         }
 
         /// <summary>

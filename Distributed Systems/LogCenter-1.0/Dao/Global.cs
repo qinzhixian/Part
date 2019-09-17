@@ -9,10 +9,13 @@ namespace LogCenter
         /// <param name="logDirPath">日志目录</param>
         public static void Start(string logDirPath = "")
         {
+            logDirPath = string.IsNullOrEmpty(logDirPath) ? Util.IO.Directory.GetCurrentDirectory() : logDirPath;
+
+            Util.LogUtil.SetLogConfig(string.Format("{0}/Logs/", logDirPath));
 
             Static.Init();
 
-            Util.Log.LogUtil.Write("logApplication is started ！", Util.Log.LogType.Debug);
+            Util.LogUtil.Write("logApplication is started ！", Util.LogType.Info);
         }
 
         public static void AddLog(LogModel log)
@@ -20,7 +23,7 @@ namespace LogCenter
             Static.AddLog(log);
         }
 
-        public static void AddLog(string content, Util.Log.LogType logType = Util.Log.LogType.Error)
+        public static void AddLog(string content, Util.LogType logType = Util.LogType.Error)
         {
             Static.AddLog(content, logType);
         }

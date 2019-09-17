@@ -3,7 +3,6 @@ using System.Threading;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Collections.Generic;
-using System.Diagnostics;
 
 namespace TestApplication
 {
@@ -64,8 +63,7 @@ namespace TestApplication
 
                 Console.WriteLine("start");
 
-
-                var res = Util.Reflection.ReflectionUtil.CallStaticMethod("Util", "IpUtil", "GetIpList");
+                test();
 
                 Console.WriteLine("end");
 
@@ -79,5 +77,18 @@ namespace TestApplication
             Console.WriteLine("执行完毕");
             Console.ReadKey();
         }
+
+        static void test()
+        {
+            new TaskFactory().StartNew(() =>
+            {
+                while (true)
+                {
+                    Thread.Sleep(1000);
+                    Console.WriteLine("11111111");
+                }
+            });
+        }
+
     }
 }

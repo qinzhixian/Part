@@ -14,7 +14,7 @@ namespace Util.Reflection
 
         static AssemblyUtil()
         {
-            assemblyString = System.Reflection.Assembly.GetExecutingAssembly().FullName;
+            assemblyString = Assembly.GetExecutingAssembly().FullName;
         }
 
         /// <summary>
@@ -46,18 +46,6 @@ namespace Util.Reflection
         }
 
         /// <summary>
-        /// 执行所有方法(method is public and static)
-        /// </summary>
-        public static void ExcuteAllMethod(string assemblyName, Type interfaceType)
-        {
-            List<Type> list = GetTypeListOfImplementedInterface(assemblyName, interfaceType);
-            foreach (Type type in list)
-            {
-                ExcuteMethodList(type);
-            }
-        }
-
-        /// <summary>
         /// 获取实现了接口的类型列表
         /// </summary>
         /// <param name="assemblyName"></param>
@@ -69,7 +57,7 @@ namespace Util.Reflection
 
             //获取整个应用程序集的类型数组
             assemblyName = string.IsNullOrEmpty(assemblyName) ? assemblyString : assemblyName;
-            var assembly = System.Reflection.Assembly.Load(assemblyName);
+            var assembly = Assembly.Load(assemblyName);
             Type[] types = assembly.GetExportedTypes();
             if (types == null || types.Length == 0)
             {
@@ -96,11 +84,8 @@ namespace Util.Reflection
         {
             var myArrayMethodInfo = myType.GetMethods(BindingFlags.Public | BindingFlags.Static);
             foreach (var item in myArrayMethodInfo)
-            {
-                item?.Invoke(null, null);
-            }
-
+                //执行
+                item.Invoke(null, null);
         }
-
     }
 }

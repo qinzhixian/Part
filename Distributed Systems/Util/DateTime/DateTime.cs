@@ -4,12 +4,12 @@ using Util.Extensions;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Util.DateTime
+namespace Util
 {
     /// <summary>
     /// DateTime帮助类
     /// </summary>
-    public static class DateTimeUtil
+    public static class DateTime
     {
         #region 属性
 
@@ -39,7 +39,7 @@ namespace Util.DateTime
         public static SDateTime ConvertToDateTime(this string timeStamp)
         {
             if (string.IsNullOrEmpty(timeStamp))
-                throw new Util.Exception.ExceptionUtil("时间戳不允许为空", Exception.ExceptionType.DateTimeIsNullOrEmpty);
+                throw new Util.Exception("时间戳不允许为空", ExceptionType.DateTimeIsNullOrEmpty);
 
             try
             {
@@ -50,7 +50,7 @@ namespace Util.DateTime
             }
             catch (System.Exception)
             {
-                throw new Util.Exception.ExceptionUtil("时间戳转换为时间中发生异常", Exception.ExceptionType.ConvertError);
+                throw new Util.Exception("时间戳转换为时间中发生异常", ExceptionType.ConvertError);
             }
 
         }

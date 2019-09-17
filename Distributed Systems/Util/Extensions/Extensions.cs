@@ -6,7 +6,7 @@ namespace Util.Extensions
     /// <summary>
     /// 扩展帮助类
     /// </summary>
-    public static class StringExpansion
+    public static class Extensions
     {
         /// <summary>
         ///     替换系统IF
@@ -140,7 +140,7 @@ namespace Util.Extensions
             if (System.DateTime.TryParse(str, out System.DateTime time))
                 return time;
             else
-                return System.DateTime.Now;
+                return DateTime.Now;
         }
 
         /// <summary>

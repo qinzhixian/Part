@@ -43,13 +43,12 @@
     <Reference Include="System.DirectoryServices" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Management" />
+    <Reference Include="System.Net" />
     <Reference Include="System.Net.Http">
-      <HintPath>C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.Net.Http.dll</HintPath>
+      <HintPath>C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.6.1\System.Net.Http.dll</HintPath>
     </Reference>
-    <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
     <Reference Include="System.ServiceProcess" />
-    <Reference Include="System.Transactions" />
     <Reference Include="System.Web" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml.Linq" />
@@ -59,47 +58,35 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Const\HttpContentType.cs" />
-    <Compile Include="Const\HttpStatusCode.cs" />
-    <Compile Include="DateTime\DateTimeCompare.cs" />
-    <Compile Include="IO\StreamUtil.cs" />
+    <Compile Include="IO\Stream.cs" />
     <Compile Include="IP\IpInfo.cs" />
     <Compile Include="IP\IpUtil.cs" />
-    <Compile Include="Log\LogConfig.cs" />
-    <Compile Include="Log\LogModel.cs" />
     <Compile Include="OS\ClientInfo.cs" />
-    <Compile Include="Reflection\Interface\IRegisterMethods.cs" />
-    <Compile Include="Reflection\ReflectionCache.cs" />
-    <Compile Include="Reflection\Model\APIModel.cs" />
-    <Compile Include="Reflection\Attribute\MethodInfoAttribute.cs" />
-    <Compile Include="Reflection\Attribute\ModuleInfoAttribute.cs" />
+    <Compile Include="Reflection\IRegisterMethods.cs" />
     <Compile Include="Reflection\Reflection.cs" />
-    <Compile Include="Config\ConfigUtil.cs" />
+    <Compile Include="Config\AppConfig.cs" />
     <Compile Include="Const\WebConst.cs" />
-    <Compile Include="DateTime\DateTimeUtil.cs" />
-    <Compile Include="Email\EmailUtil.cs" />
-    <Compile Include="Enum\EnumUtil.cs" />
+    <Compile Include="DateTime\DateTime.cs" />
+    <Compile Include="Email\Email.cs" />
+    <Compile Include="Enum\Enum.cs" />
     <Compile Include="Exception\ExceptionType.cs" />
-    <Compile Include="Exception\ExceptionUtil.cs" />
-    <Compile Include="Extensions\StringExpansion.cs" />
-    <Compile Include="Extensions\ShorthandUtil.cs" />
-    <Compile Include="IO\FileUtil.cs" />
-    <Compile Include="Json\JsonUtil.cs" />
-    <Compile Include="Log\LogUtil.cs" />
-    <Compile Include="Log\LogType.cs" />
+    <Compile Include="Exception\Exception.cs" />
+    <Compile Include="Extensions\Extensions.cs" />
+    <Compile Include="Extensions\Shorthand.cs" />
+    <Compile Include="IO\File.cs" />
+    <Compile Include="Json\Json.cs" />
+    <Compile Include="Log\Log.cs" />
     <Compile Include="Process\Process.cs" />
-    <Compile Include="Reflection\ReflectionClass.cs" />
-    <Compile Include="Reflection\ReflectionUtil.cs" />
-    <Compile Include="Task\TaskUtil.cs" />
     <Compile Include="Utility\AES.cs" />
     <Compile Include="Utility\Base64.cs" />
     <Compile Include="Utility\Convert.cs" />
-    <Compile Include="IO\DirectoryUtil.cs" />
+    <Compile Include="IO\Directory.cs" />
     <Compile Include="Utility\MD5.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Web\CookiesUtil.cs" />
-    <Compile Include="Web\HtmlUtil.cs" />
-    <Compile Include="Web\SessionUtil.cs" />
+    <Compile Include="Web\Cookies.cs" />
+    <Compile Include="Web\Html.cs" />
+    <Compile Include="Web\IIS.cs" />
+    <Compile Include="Web\Session.cs" />
     <Compile Include="Web\WebUtil.cs" />
   </ItemGroup>
   <ItemGroup />

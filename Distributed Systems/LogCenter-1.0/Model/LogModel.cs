@@ -9,7 +9,7 @@ namespace LogCenter
     {
         public string Content { get; set; }
 
-        public Util.Log.LogType LogType { get; set; }
+        public Util.LogType LogType { get; set; }
 
         public DateTime AddTime { get; set; }
     }

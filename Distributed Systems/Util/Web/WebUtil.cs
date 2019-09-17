@@ -1,12 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
+using System.Diagnostics.Contracts;
+using System.Linq;
 using System.Net;
-using System.Net.Http;
 using System.Reflection;
 using System.Text;
+using System.Threading.Tasks;
 using System.Web;
-using Util.Json;
+
 
 namespace Util.Web
 {
@@ -15,26 +17,44 @@ namespace Util.Web
     /// </summary>
     public static class WebUtil
     {
-        public static string GetResponseParame(HttpRequest request)
+        public static string GetResponseParame(System.Web.HttpRequestBase request)
         {
             if (request == null)
                 return string.Empty;
 
-            if (request.Form == null)
+            string parame = string.Empty;
+
+            string method = request.HttpMethod;
+
+            if (method == "GET")
             {
-                return UrlDeCode(request.Form.ToString());
+                parame = request.Url.Query;
             }
-            return UrlDeCode(request.QueryString.ToString());
+            else if (method == "POST")
+            {
+                parame = request.Form.ToString();
+            }
+
+            return UrlDeCode(parame);
         }
 
-        public static string GetRequestUrl(HttpRequest request)
+        public static string GetRequestUrl(System.Web.HttpRequestBase request)
         {
             if (request == null)
                 return string.Empty;
 
-            return UrlDeCode(request.RawUrl);
+            return UrlDeCode(request.Url.ToString());
         }
 
+        public static System.Web.HttpContextBase TransToBase(this System.Web.HttpContext context)
+        {
+            return new System.Web.HttpContextWrapper(context);
+        }
+
+        public static System.Web.HttpRequestBase TransToBase(this System.Web.HttpRequest context)
+        {
+            return new System.Web.HttpRequestWrapper(context);
+        }
 
         /// <summary>
         /// Url解码
@@ -161,7 +181,7 @@ namespace Util.Web
             using (WebClient client = new WebClient())
             {
                 client.Encoding = Encoding.UTF8;
-                byte[] data = client.UploadData(url, method, client.Encoding.GetBytes(UrlEncode(JsonUtil.Serialize(sendData))));
+                byte[] data = client.UploadData(url, method, client.Encoding.GetBytes(UrlEncode(Util.JsonUtil.Serialize(sendData))));
                 return client.Encoding.GetString(data);
             }
         }
@@ -227,5 +247,6 @@ namespace Util.Web
                 client.UploadFileAsync(new Uri(url), "Http", fileFullName);
             }
         }
+
     }
 }

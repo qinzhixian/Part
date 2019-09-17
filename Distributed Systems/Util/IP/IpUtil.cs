@@ -94,7 +94,7 @@ namespace Util.IP
                     c.Close();
                     return ip;
                 }
-                catch (System.Exception)
+                catch (Exception)
                 {
                     return null;
                 }
@@ -135,7 +135,7 @@ namespace Util.IP
             }
             string data = jsonData["data"].ToString();
 
-            var IpInfo = Json.JsonUtil.Deseriailze<IpInfo>(data);
+            var IpInfo = JsonUtil.Deseriailze<IpInfo>(data);
 
             return IpInfo;
         }

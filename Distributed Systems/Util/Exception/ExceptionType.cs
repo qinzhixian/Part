@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Util.Exception
+namespace Util
 {
     /// <summary>
     /// 异常类别

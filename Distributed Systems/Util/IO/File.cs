@@ -9,7 +9,7 @@ namespace Util.IO
     /// 线程安全类
     /// 可能引发的异常：Util.Exception
     /// </summary>
-    public static class FileUtil
+    public static class File
     {
         #region 私有成员
 
@@ -27,19 +27,17 @@ namespace Util.IO
         /// </summary>
         /// <param name="oldFilePath">源文件</param>
         /// <param name="newFilePath">目标文件</param>
-        public static bool Copy(string oldFilePath, string newFilePath)
+        public static void Copy(string oldFilePath, string newFilePath)
         {
             lock (locker)
             {
-                if (!Exists(oldFilePath) || Exists(newFilePath))
-                {
-                    return false;
-                }
+                if (!Exists(oldFilePath))
+                    throw new Util.Exception("源文件不存在！");
+                if (Exists(newFilePath))
+                    throw new Util.Exception("新文件已存在！");
 
                 SIO.File.Copy(oldFilePath, newFilePath);
             }
-
-            return true;
         }
 
         /// <summary>
@@ -107,19 +105,17 @@ namespace Util.IO
         /// </summary>
         /// <param name="oldFilePath">源文件</param>
         /// <param name="newFilePath">目标文件</param>
-        public static bool Move(string oldFilePath, string newFilePath)
+        public static void Move(string oldFilePath, string newFilePath)
         {
-            if (!Exists(oldFilePath) || Exists(newFilePath))
-            {
-                return false;
-            }
+            if (!Exists(oldFilePath))
+                throw new Util.Exception("源文件不存在！");
+            if (Exists(newFilePath))
+                throw new Util.Exception("新文件已存在！");
 
             lock (locker)
             {
                 SIO.File.Move(oldFilePath, newFilePath);
             }
-
-            return true;
         }
 
         /// <summary>
@@ -146,9 +142,9 @@ namespace Util.IO
         private static void SaveFile(string filePath, string content, Encoding encoding, bool isOverride = false, bool isNewLine = true)
         {
             if (string.IsNullOrEmpty(filePath) || string.IsNullOrEmpty(filePath))
-                throw new System.Exception("操作不正确！");
-            string dirPath = GetDirPath(filePath);
-            SIO.Directory.CreateDirectory(dirPath);
+                throw new Exception("操作不正确！");
+            string dirPath = Directory.GetDirPath(filePath);
+            Directory.Create(dirPath);
 
             var fileModel = SIO.FileMode.OpenOrCreate;
             if (isOverride)
@@ -157,9 +153,6 @@ namespace Util.IO
             }
             lock (locker)
             {
-                if (!Exists(filePath))
-                    Create(filePath);
-
                 using (SIO.FileStream file = new SIO.FileStream(filePath, fileModel))
                 {
                     encoding = encoding == null ? Encoding.UTF8 : encoding;
@@ -187,19 +180,6 @@ namespace Util.IO
         #endregion
 
         #region Select
-
-        /// <summary>
-        /// 获取路径中的目录部分
-        /// </summary>
-        /// <param name="filePath">文件路径</param>
-        /// <returns></returns>
-        public static string GetDirPath(string filePath)
-        {
-            string path = string.Empty;
-            if (!string.IsNullOrEmpty(filePath))
-                path = filePath.Substring(0, filePath.LastIndexOf(@"\"));
-            return path;
-        }
 
         /// <summary>
         /// 读取文件内容
@@ -311,7 +291,7 @@ namespace Util.IO
         public static string GetFileName(string filePath, bool isContansExtension = true)
         {
             string fileName = string.Empty;
-
+            
             fileName = SIO.Path.GetFileName(filePath);
             if (!isContansExtension)
             {
